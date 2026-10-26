@@ -1,0 +1,5 @@
+# Course material is copyrighted — never publish it
+*.pdf
+renders/
+node_modules/
+.claude/

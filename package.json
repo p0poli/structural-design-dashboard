@@ -1,0 +1,13 @@
+{
+  "name": "structural-design-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Formula reference dashboard for SAMS structural design (TU Delft Building Technology).",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "katex": "0.16.11"
+  }
+}
