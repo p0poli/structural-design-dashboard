@@ -6,9 +6,9 @@
   const tabsEl = document.getElementById("tabs");
   const contentEl = document.getElementById("content");
 
-  function tex(src, displayMode) {
+  function tex(src) {
     const span = document.createElement("span");
-    katex.render(src, span, { displayMode: !!displayMode, throwOnError: false, strict: false });
+    katex.render(src, span, { throwOnError: false, strict: false });
     return span;
   }
 
@@ -25,7 +25,7 @@
     tile.appendChild(el("h3", "tile-name", f.name));
 
     const formula = el("div", "tile-formula");
-    formula.appendChild(tex(f.latex, true));
+    formula.appendChild(tex(window.wrappableFormula(f.latex)));
     tile.appendChild(formula);
 
     if (f.variables && f.variables.length) {
@@ -54,6 +54,7 @@
       const active = tab.dataset.topic === topic.id;
       tab.setAttribute("aria-selected", active);
       tab.tabIndex = active ? 0 : -1;
+      if (active) tabsEl.scrollLeft = tab.offsetLeft - tabsEl.offsetLeft - (tabsEl.clientWidth - tab.offsetWidth) / 2;
     });
 
     contentEl.replaceChildren();

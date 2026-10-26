@@ -12,7 +12,7 @@ const dataFiles = [...html.matchAll(/<script src="(data\/[^"]+\.js)"><\/script>/
 
 const context = { window: {} };
 vm.createContext(context);
-for (const file of dataFiles) {
+for (const file of [...dataFiles, "js/latex.js"]) {
   vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), context, { filename: file });
 }
 
@@ -43,6 +43,7 @@ for (const f of formulas) {
   for (const key of ["subtopic", "name"]) if (!f[key]) errors.push(`${where}: missing ${key}`);
   if (!f.source || !f.source.file || !f.source.page) errors.push(`${where}: missing source file/page`);
   checkTex(f.latex, `${where}.latex`, true);
+  if (f.latex) checkTex(context.window.wrappableFormula(f.latex), `${where}.latex (as rendered)`, false);
   if (!Array.isArray(f.variables) || !f.variables.length) errors.push(`${where}: no variables`);
   (f.variables || []).forEach((v, i) => {
     checkTex(v.symbol, `${where}.variables[${i}].symbol`, false);
